@@ -13,12 +13,12 @@ const navLinks = [
   { href: "/mylist", label: "My List" },
 ];
 
-export default function Navbar() {
+export default function Navbar({ initialConfig }: { initialConfig?: any }) {
   const [scrolled, setScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [siteConfig, setSiteConfig] = useState<any>(null);
+  const [siteConfig, setSiteConfig] = useState<any>(initialConfig || null);
   const searchRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const pathname = usePathname();

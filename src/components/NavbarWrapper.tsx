@@ -2,12 +2,12 @@
 import { usePathname } from "next/navigation";
 import Navbar from "@/components/Navbar";
 
-export default function NavbarWrapper() {
+export default function NavbarWrapper({ initialConfig }: { initialConfig?: any }) {
   const pathname = usePathname();
   const adminPath = process.env.NEXT_PUBLIC_ADMIN_PATH || "ketua";
 
   // Hide Navbar on all admin pages
   if (pathname.startsWith(`/${adminPath}`)) return null;
 
-  return <Navbar />;
+  return <Navbar initialConfig={initialConfig} />;
 }

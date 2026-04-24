@@ -20,6 +20,8 @@ export async function generateMetadata({ params }: Props) {
   }
 }
 
+import ApiDownState from "@/components/ApiDownState";
+
 export default async function MovieDetailPage({ params }: Props) {
   const { id } = await params;
   
@@ -31,10 +33,18 @@ export default async function MovieDetailPage({ params }: Props) {
   try {
     const movie = await getMovieDetails(movieId);
     if (!movie) {
-      notFound();
+      return (
+        <div className="min-h-screen bg-zinc-950 pt-32 pb-16">
+          <ApiDownState provider="TMDB" />
+        </div>
+      );
     }
     return <MovieDetailClient movie={movie} />;
-  } catch {
-    notFound();
+  } catch (error) {
+    return (
+      <div className="min-h-screen bg-zinc-950 pt-32 pb-16">
+        <ApiDownState provider="TMDB" />
+      </div>
+    );
   }
 }

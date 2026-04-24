@@ -89,7 +89,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className={inter.className} style={{ background: "#09090b", minHeight: "100vh", display: "flex", flexDirection: "column" }}>
         <PageTracker />
-        <NavbarWrapper />
+        <NavbarWrapper initialConfig={config} />
         <main style={{ flex: 1 }}>{children}</main>
         <Footer />
         <ScrollToTop />

@@ -11,6 +11,7 @@ import InfiniteScrollGrid from "@/components/InfiniteScrollGrid";
 import { fetchTVAction } from "@/app/actions";
 
 import { getSiteConfig } from "@/app/api/admin/site/route";
+import ApiDownState from "@/components/ApiDownState";
 
 export async function generateMetadata() {
   const config = await getSiteConfig();
@@ -33,6 +34,14 @@ export default async function TVShowsPage({ searchParams }: Props) {
     getTVGenres(),
     genreId ? discoverTV(genreId) : Promise.resolve(null),
   ]);
+
+  if (!popular?.results?.length && !topRated?.results?.length) {
+    return (
+      <div className="min-h-screen bg-zinc-950 pt-32 pb-16">
+        <ApiDownState provider="TMDB" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-zinc-950 pt-20 pb-16">

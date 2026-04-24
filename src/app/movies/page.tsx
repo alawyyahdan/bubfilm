@@ -14,6 +14,8 @@ import GenreFilter from "@/components/GenreFilter";
 import InfiniteScrollGrid from "@/components/InfiniteScrollGrid";
 import { fetchMoviesAction } from "@/app/actions";
 
+import ApiDownState from "@/components/ApiDownState";
+
 export async function generateMetadata() {
   const config = await getSiteConfig();
   return { title: `Movies - ${config.siteName || "Film"}` };
@@ -38,6 +40,14 @@ export default async function MoviesPage({ searchParams }: Props) {
     getSiteConfig(),
     getTrending("movie", "week"),
   ]);
+
+  if (!popular?.results?.length && !topRated?.results?.length) {
+    return (
+      <div className="min-h-screen bg-zinc-950 pt-32 pb-16">
+        <ApiDownState provider="TMDB" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-zinc-950 pt-20 pb-16">

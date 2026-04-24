@@ -10,6 +10,8 @@ import ContentRow from "@/components/ContentRow";
 import SportsRow from "@/components/SportsRow";
 import BannerAd from "@/components/BannerAd";
 
+import ApiDownState from "@/components/ApiDownState";
+
 export default async function HomePage() {
   const [
     trending, popularMovies, nowPlaying, topRatedMovies,
@@ -32,6 +34,14 @@ export default async function HomePage() {
     ...item,
     media_type: item.media_type || "movie",
   }));
+
+  if (heroRaw.length === 0) {
+    return (
+      <div className="min-h-screen bg-zinc-950 pt-32 pb-16">
+        <ApiDownState provider="TMDB & AniList" />
+      </div>
+    );
+  }
 
   const videoKeys = await Promise.all(
     heroRaw.map(async (item: Record<string, unknown>) => {

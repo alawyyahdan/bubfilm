@@ -20,6 +20,8 @@ export async function generateMetadata({ params }: Props) {
   }
 }
 
+import ApiDownState from "@/components/ApiDownState";
+
 export default async function TVDetailPage({ params }: Props) {
   const { id } = await params;
   
@@ -35,11 +37,19 @@ export default async function TVDetailPage({ params }: Props) {
     ]);
     
     if (!show) {
-      notFound();
+      return (
+        <div className="min-h-screen bg-zinc-950 pt-32 pb-16">
+          <ApiDownState provider="TMDB" />
+        </div>
+      );
     }
 
     return <TVDetailClient show={show} initialSeason={season1} />;
-  } catch {
-    notFound();
+  } catch (error) {
+    return (
+      <div className="min-h-screen bg-zinc-950 pt-32 pb-16">
+        <ApiDownState provider="TMDB" />
+      </div>
+    );
   }
 }

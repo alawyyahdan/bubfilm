@@ -20,6 +20,8 @@ export async function generateMetadata({ params }: Props) {
   }
 }
 
+import ApiDownState from "@/components/ApiDownState";
+
 export default async function AnimeDetailPage({ params }: Props) {
   const { id } = await params;
   
@@ -32,13 +34,21 @@ export default async function AnimeDetailPage({ params }: Props) {
   try {
     const anime = await getAnimeDetails(animeId);
     
-    // 2. Kalo data anime null (nggak ketemu di AniList), langsung 404
+    // 2. Kalo data anime null (nggak ketemu di AniList), render ApiDownState karena kemungkinan server tumbang
     if (!anime) {
-      notFound();
+      return (
+        <div className="min-h-screen bg-zinc-950 pt-32 pb-16">
+          <ApiDownState provider="AniList" />
+        </div>
+      );
     }
 
     return <AnimeDetailClient anime={anime} />;
-  } catch {
-    notFound();
+  } catch (error) {
+    return (
+      <div className="min-h-screen bg-zinc-950 pt-32 pb-16">
+        <ApiDownState provider="AniList" />
+      </div>
+    );
   }
 }

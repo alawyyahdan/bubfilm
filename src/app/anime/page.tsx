@@ -5,6 +5,8 @@ import { fetchAnimeAction } from "@/app/actions";
 
 import { getSiteConfig } from "@/app/api/admin/site/route";
 
+import ApiDownState from "@/components/ApiDownState";
+
 export async function generateMetadata() {
   const config = await getSiteConfig();
   return { title: `Anime - ${config.siteName || "Film"}` };
@@ -21,6 +23,14 @@ export default async function AnimePage() {
     getTopRatedAnime(),
     getSeasonalAnime(currentSeason, currentYear),
   ]);
+
+  if (!trending?.length && !popular?.length) {
+    return (
+      <div className="min-h-screen bg-zinc-950 pt-32 pb-16">
+        <ApiDownState provider="AniList" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-zinc-950 pt-20 pb-16">
