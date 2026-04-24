@@ -42,28 +42,28 @@ export const getTrendingAnime = () =>
     Page(page: 1, perPage: 20) {
       media(sort: TRENDING_DESC, type: ANIME, isAdult: false) { ${MEDIA_FIELDS} }
     }
-  }`).then((d) => d.Page.media);
+  }`).then((d) => d?.Page?.media || []);
 
 export const getPopularAnime = (page = 1) =>
   anilistFetch(`query($page: Int) {
     Page(page: $page, perPage: 20) {
       media(sort: POPULARITY_DESC, type: ANIME, isAdult: false) { ${MEDIA_FIELDS} }
     }
-  }`, { page }).then((d) => d.Page.media);
+  }`, { page }).then((d) => d?.Page?.media || []);
 
 export const getSeasonalAnime = (season: string, year: number) =>
   anilistFetch(`query($season: MediaSeason, $year: Int) {
     Page(page: 1, perPage: 20) {
       media(season: $season, seasonYear: $year, sort: POPULARITY_DESC, type: ANIME, isAdult: false) { ${MEDIA_FIELDS} }
     }
-  }`, { season, year }).then((d) => d.Page.media);
+  }`, { season, year }).then((d) => d?.Page?.media || []);
 
 export const getTopRatedAnime = () =>
   anilistFetch(`query {
     Page(page: 1, perPage: 20) {
       media(sort: SCORE_DESC, type: ANIME, isAdult: false) { ${MEDIA_FIELDS} }
     }
-  }`).then((d) => d.Page.media);
+  }`).then((d) => d?.Page?.media || []);
 
 export const getAnimeDetails = (id: number) =>
   anilistFetch(`query($id: Int) {
@@ -87,14 +87,14 @@ export const getAnimeDetails = (id: number) =>
         }
       }
     }
-  }`, { id }).then((d) => d.Media);
+  }`, { id }).then((d) => d?.Media || null);
 
 export const searchAnime = (search: string) =>
   anilistFetch(`query($search: String) {
     Page(page: 1, perPage: 20) {
       media(search: $search, type: ANIME, isAdult: false) { ${MEDIA_FIELDS} }
     }
-  }`, { search }).then((d) => d.Page.media);
+  }`, { search }).then((d) => d?.Page?.media || []);
 
 export interface AniListMedia {
   id: number;
