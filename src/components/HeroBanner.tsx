@@ -51,9 +51,14 @@ export default function HeroBanner({ items, siteName = "Film" }: HeroBannerProps
   const [transitioning, setTransitioning] = useState(false);
   const [muted, setMuted] = useState(true);
   const [progress, setProgress] = useState(0);
+  const [videoReady, setVideoReady] = useState(false);
   const router = useRouter();
   const progressRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const videoCheckRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const failCountRef = useRef(0);
+  const nextRef = useRef<(() => void) | null>(null);
   const DURATION = 8000;
+  const siteOrigin = typeof window !== "undefined" ? window.location.origin : (process.env.NEXT_PUBLIC_SITE_URL || "");
 
   const goTo = useCallback((idx: number) => {
     if (transitioning || idx === current) return;
@@ -61,10 +66,54 @@ export default function HeroBanner({ items, siteName = "Film" }: HeroBannerProps
     setPrev(current);
     setCurrent(idx);
     setProgress(0);
+    setVideoReady(false);
     setTimeout(() => { setPrev(null); setTransitioning(false); }, 700);
   }, [current, transitioning]);
 
   const next = useCallback(() => goTo((current + 1) % items.length), [current, items.length, goTo]);
+
+  // Keep nextRef always fresh to avoid stale closures in setTimeout
+  useEffect(() => { nextRef.current = next; }, [next]);
+
+  // YouTube postMessage listener — detects if trailer is actually playing
+  useEffect(() => {
+    const videoKey = getVideoKey(items[current]);
+    if (!videoKey) {
+      failCountRef.current = 0;
+      setVideoReady(false);
+      return;
+    }
+
+    setVideoReady(false);
+
+    const handleMessage = (event: MessageEvent) => {
+      try {
+        const data = JSON.parse(typeof event.data === "string" ? event.data : "{}");
+        // YouTube IFrame API sends playerState: 1 when video is actually playing
+        if (data?.event === "infoDelivery" && data?.info?.playerState === 1) {
+          if (videoCheckRef.current) clearTimeout(videoCheckRef.current);
+          failCountRef.current = 0;
+          setVideoReady(true);
+        }
+      } catch {}
+    };
+
+    window.addEventListener("message", handleMessage);
+
+    // 5 seconds to detect playback, if not playing → assume blocked/sign-in → skip
+    videoCheckRef.current = setTimeout(() => {
+      failCountRef.current++;
+      if (failCountRef.current < items.length) {
+        nextRef.current?.();
+      }
+      // else all slides failed → just show backdrop, no autoplay
+    }, 5000);
+
+    return () => {
+      window.removeEventListener("message", handleMessage);
+      if (videoCheckRef.current) clearTimeout(videoCheckRef.current);
+    };
+  }, [current, items]);
 
   // Progress bar ticker
   useEffect(() => {
@@ -108,25 +157,25 @@ export default function HeroBanner({ items, siteName = "Film" }: HeroBannerProps
 
       {/* ── CURRENT SLIDE BACKDROP / VIDEO ── */}
       <div className={`absolute inset-0 z-10 ${transitioning ? "animate-fade-in" : "opacity-100"}`}>
-        {/* YouTube Trailer (muted, autoplay, loop) */}
-        {videoKey ? (
-          <div className="absolute inset-0 overflow-hidden">
+        {/* Backdrop Image — always shown as base layer */}
+        <Image
+          src={getBackdrop(item)}
+          alt={getTitle(item)}
+          fill priority
+          className="object-cover object-center"
+          sizes="100vw"
+        />
+        {/* YouTube Trailer — hidden until postMessage confirms it's playing */}
+        {videoKey && (
+          <div className={`absolute inset-0 overflow-hidden transition-opacity duration-1000 ${videoReady ? "opacity-100" : "opacity-0"}`}>
             <iframe
               key={videoKey}
               className="absolute w-[100vw] h-[56.25vw] min-h-[100vh] min-w-[177.77vh] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-              src={`https://www.youtube-nocookie.com/embed/${videoKey}?autoplay=1&mute=${muted ? 1 : 0}&loop=1&controls=0&showinfo=0&rel=0&modestbranding=1&playlist=${videoKey}&iv_load_policy=3&disablekb=1&fs=0&playsinline=1`}
+              src={`https://www.youtube-nocookie.com/embed/${videoKey}?autoplay=1&mute=${muted ? 1 : 0}&loop=1&controls=0&showinfo=0&rel=0&modestbranding=1&playlist=${videoKey}&iv_load_policy=3&disablekb=1&fs=0&playsinline=1&enablejsapi=1&origin=${siteOrigin}`}
               allow="autoplay; encrypted-media"
               title="trailer"
             />
           </div>
-        ) : (
-          <Image
-            src={getBackdrop(item)}
-            alt={getTitle(item)}
-            fill priority
-            className="object-cover object-center"
-            sizes="100vw"
-          />
         )}
         <div className="absolute inset-0 hero-gradient" />
         <div className="absolute bottom-0 left-0 right-0 h-48 hero-bottom-gradient" />

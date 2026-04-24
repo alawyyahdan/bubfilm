@@ -26,11 +26,35 @@
     "animeUrl": ""
   },
   {
-    "id": "server-1777035765286",
-    "name": "New Server",
+    "id": "vidnest-sub",
+    "name": "VidNest Sub",
     "enabled": true,
     "movieUrl": "",
     "tvUrl": "",
     "animeUrl": "https://vidnest.fun/animepahe/{anilist}/{episode}/sub"
+  },
+  {
+    "id": "vidnest-dub",
+    "name": "VidNest Dub",
+    "enabled": true,
+    "movieUrl": "",
+    "tvUrl": "",
+    "animeUrl": "https://vidnest.fun/animepahe/{anilist}/{episode}/dub"
+  },
+  {
+    "id": "vidnest2-sub",
+    "name": "VidNest2 Sub",
+    "enabled": true,
+    "movieUrl": "",
+    "tvUrl": "",
+    "animeUrl": "https://vidnest.fun/anime/{anilist}/{episode}/sub"
+  },
+  {
+    "id": "vidnest2-dub",
+    "name": "VidNest2 Dub",
+    "enabled": true,
+    "movieUrl": "",
+    "tvUrl": "",
+    "animeUrl": "https://vidnest.fun/anime/{anilist}/{episode}/dub"
   }
 ]
