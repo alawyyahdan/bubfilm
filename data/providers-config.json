@@ -1,0 +1,28 @@
+[
+  {
+    "id": "videasy",
+    "name": "Videasy VIP",
+    "enabled": true,
+    "movieUrl": "https://player.videasy.net/movie/{tmdb}?color=E50914&overlay=true",
+    "tvUrl": "https://player.videasy.net/tv/{tmdb}/{season}/{episode}?color=E50914&nextEpisode=true&autoplayNextEpisode=true&episodeSelector=true&overlay=true",
+    "animeUrl": "https://player.videasy.net/anime/{tmdb}/{episode}?color=E50914",
+    "note": "Tags: {tmdb} {season} {episode} {mal}"
+  },
+  {
+    "id": "vidlink",
+    "name": "VidLink Ultra",
+    "enabled": true,
+    "movieUrl": "https://vidlink.pro/movie/{tmdb}?primaryColor=E50914&autoplay=false",
+    "tvUrl": "https://vidlink.pro/tv/{tmdb}/{season}/{episode}?primaryColor=E50914&autoplay=false",
+    "animeUrl": "https://vidlink.pro/anime/{mal}/{episode}/sub?primaryColor=E50914&fallback=true",
+    "note": "Tags: {tmdb} {season} {episode} {mal}"
+  },
+  {
+    "id": "vidsrc",
+    "name": "VidSrc",
+    "enabled": true,
+    "movieUrl": "https://vidsrc-embed.ru/embed/movie/{tmdb}",
+    "tvUrl": "https://vidsrc-embed.ru/embed/tv/{tmdb}/{season}-{episode}",
+    "animeUrl": ""
+  }
+]

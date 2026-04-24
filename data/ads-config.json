@@ -1,0 +1,131 @@
+{
+  "popup": {
+    "enabled": true,
+    "ads": [
+      {
+        "imageUrl": "https://iphone17.b-cdn.net/iklan/PENTASLOT.gif",
+        "linkUrl": ""
+      },
+      {
+        "imageUrl": "https://iphone17.b-cdn.net/iklan/PENTASLOT.gif",
+        "linkUrl": ""
+      }
+    ]
+  },
+  "preRoll": {
+    "enabled": true,
+    "type": "video",
+    "durationSeconds": 15,
+    "videoUrl": "https://www.nlm.nih.gov/web/documentation/TemplateDocumentation/video_files/Wash_and_Learn_Saint_Paul_SD540p.mp4",
+    "videoLinkUrl": "asdasdasd.com",
+    "imageAds": [
+      {
+        "imageUrl": "https://iphone17.b-cdn.net/iklan/PENTASLOT.gif",
+        "linkUrl": ""
+      },
+      {
+        "imageUrl": "https://iphone17.b-cdn.net/iklan/PENTASLOT.gif",
+        "linkUrl": ""
+      }
+    ]
+  },
+  "bannerAds": {
+    "homeEnabled": true,
+    "homeAds": [
+      {
+        "imageUrl": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjejR2cUl0KpQSyHykdJMf9gnWmU-3UqAfIurd5wqR2tWaVNWy8Q9uGVXeiJ_btZx_coOm1M2RNvh25pJ3Lt2WKz1kUcYhjPgFkL6rUW2rIhQlWNNo8CBFM6aHsC7E8b6TqPn7i0mqI9XsbJTFul7WsjSfIObOcmIZcfrti7vL9Bit0G1hhEjpvEHPDuXNh/s1456/Gif-ADs-8889_Idlix.gif",
+        "linkUrl": ""
+      },
+      {
+        "imageUrl": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjejR2cUl0KpQSyHykdJMf9gnWmU-3UqAfIurd5wqR2tWaVNWy8Q9uGVXeiJ_btZx_coOm1M2RNvh25pJ3Lt2WKz1kUcYhjPgFkL6rUW2rIhQlWNNo8CBFM6aHsC7E8b6TqPn7i0mqI9XsbJTFul7WsjSfIObOcmIZcfrti7vL9Bit0G1hhEjpvEHPDuXNh/s1456/Gif-ADs-8889_Idlix.gif",
+        "linkUrl": ""
+      },
+      {
+        "imageUrl": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjejR2cUl0KpQSyHykdJMf9gnWmU-3UqAfIurd5wqR2tWaVNWy8Q9uGVXeiJ_btZx_coOm1M2RNvh25pJ3Lt2WKz1kUcYhjPgFkL6rUW2rIhQlWNNo8CBFM6aHsC7E8b6TqPn7i0mqI9XsbJTFul7WsjSfIObOcmIZcfrti7vL9Bit0G1hhEjpvEHPDuXNh/s1456/Gif-ADs-8889_Idlix.gif",
+        "linkUrl": ""
+      },
+      {
+        "imageUrl": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjejR2cUl0KpQSyHykdJMf9gnWmU-3UqAfIurd5wqR2tWaVNWy8Q9uGVXeiJ_btZx_coOm1M2RNvh25pJ3Lt2WKz1kUcYhjPgFkL6rUW2rIhQlWNNo8CBFM6aHsC7E8b6TqPn7i0mqI9XsbJTFul7WsjSfIObOcmIZcfrti7vL9Bit0G1hhEjpvEHPDuXNh/s1456/Gif-ADs-8889_Idlix.gif",
+        "linkUrl": ""
+      },
+      {
+        "imageUrl": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjejR2cUl0KpQSyHykdJMf9gnWmU-3UqAfIurd5wqR2tWaVNWy8Q9uGVXeiJ_btZx_coOm1M2RNvh25pJ3Lt2WKz1kUcYhjPgFkL6rUW2rIhQlWNNo8CBFM6aHsC7E8b6TqPn7i0mqI9XsbJTFul7WsjSfIObOcmIZcfrti7vL9Bit0G1hhEjpvEHPDuXNh/s1456/Gif-ADs-8889_Idlix.gif",
+        "linkUrl": ""
+      },
+      {
+        "imageUrl": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjejR2cUl0KpQSyHykdJMf9gnWmU-3UqAfIurd5wqR2tWaVNWy8Q9uGVXeiJ_btZx_coOm1M2RNvh25pJ3Lt2WKz1kUcYhjPgFkL6rUW2rIhQlWNNo8CBFM6aHsC7E8b6TqPn7i0mqI9XsbJTFul7WsjSfIObOcmIZcfrti7vL9Bit0G1hhEjpvEHPDuXNh/s1456/Gif-ADs-8889_Idlix.gif",
+        "linkUrl": ""
+      }
+    ],
+    "detailEnabled": true,
+    "detailAds": [
+      {
+        "imageUrl": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjejR2cUl0KpQSyHykdJMf9gnWmU-3UqAfIurd5wqR2tWaVNWy8Q9uGVXeiJ_btZx_coOm1M2RNvh25pJ3Lt2WKz1kUcYhjPgFkL6rUW2rIhQlWNNo8CBFM6aHsC7E8b6TqPn7i0mqI9XsbJTFul7WsjSfIObOcmIZcfrti7vL9Bit0G1hhEjpvEHPDuXNh/s1456/Gif-ADs-8889_Idlix.gif",
+        "linkUrl": ""
+      },
+      {
+        "imageUrl": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjejR2cUl0KpQSyHykdJMf9gnWmU-3UqAfIurd5wqR2tWaVNWy8Q9uGVXeiJ_btZx_coOm1M2RNvh25pJ3Lt2WKz1kUcYhjPgFkL6rUW2rIhQlWNNo8CBFM6aHsC7E8b6TqPn7i0mqI9XsbJTFul7WsjSfIObOcmIZcfrti7vL9Bit0G1hhEjpvEHPDuXNh/s1456/Gif-ADs-8889_Idlix.gif",
+        "linkUrl": ""
+      },
+      {
+        "imageUrl": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjejR2cUl0KpQSyHykdJMf9gnWmU-3UqAfIurd5wqR2tWaVNWy8Q9uGVXeiJ_btZx_coOm1M2RNvh25pJ3Lt2WKz1kUcYhjPgFkL6rUW2rIhQlWNNo8CBFM6aHsC7E8b6TqPn7i0mqI9XsbJTFul7WsjSfIObOcmIZcfrti7vL9Bit0G1hhEjpvEHPDuXNh/s1456/Gif-ADs-8889_Idlix.gif",
+        "linkUrl": ""
+      },
+      {
+        "imageUrl": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjejR2cUl0KpQSyHykdJMf9gnWmU-3UqAfIurd5wqR2tWaVNWy8Q9uGVXeiJ_btZx_coOm1M2RNvh25pJ3Lt2WKz1kUcYhjPgFkL6rUW2rIhQlWNNo8CBFM6aHsC7E8b6TqPn7i0mqI9XsbJTFul7WsjSfIObOcmIZcfrti7vL9Bit0G1hhEjpvEHPDuXNh/s1456/Gif-ADs-8889_Idlix.gif",
+        "linkUrl": ""
+      }
+    ]
+  },
+  "sportAds": {
+    "bannerEnabled": true,
+    "bannerAds": [
+      {
+        "imageUrl": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjejR2cUl0KpQSyHykdJMf9gnWmU-3UqAfIurd5wqR2tWaVNWy8Q9uGVXeiJ_btZx_coOm1M2RNvh25pJ3Lt2WKz1kUcYhjPgFkL6rUW2rIhQlWNNo8CBFM6aHsC7E8b6TqPn7i0mqI9XsbJTFul7WsjSfIObOcmIZcfrti7vL9Bit0G1hhEjpvEHPDuXNh/s1456/Gif-ADs-8889_Idlix.gif",
+        "linkUrl": ""
+      },
+      {
+        "imageUrl": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjejR2cUl0KpQSyHykdJMf9gnWmU-3UqAfIurd5wqR2tWaVNWy8Q9uGVXeiJ_btZx_coOm1M2RNvh25pJ3Lt2WKz1kUcYhjPgFkL6rUW2rIhQlWNNo8CBFM6aHsC7E8b6TqPn7i0mqI9XsbJTFul7WsjSfIObOcmIZcfrti7vL9Bit0G1hhEjpvEHPDuXNh/s1456/Gif-ADs-8889_Idlix.gif",
+        "linkUrl": ""
+      },
+      {
+        "imageUrl": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjejR2cUl0KpQSyHykdJMf9gnWmU-3UqAfIurd5wqR2tWaVNWy8Q9uGVXeiJ_btZx_coOm1M2RNvh25pJ3Lt2WKz1kUcYhjPgFkL6rUW2rIhQlWNNo8CBFM6aHsC7E8b6TqPn7i0mqI9XsbJTFul7WsjSfIObOcmIZcfrti7vL9Bit0G1hhEjpvEHPDuXNh/s1456/Gif-ADs-8889_Idlix.gif",
+        "linkUrl": ""
+      },
+      {
+        "imageUrl": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjejR2cUl0KpQSyHykdJMf9gnWmU-3UqAfIurd5wqR2tWaVNWy8Q9uGVXeiJ_btZx_coOm1M2RNvh25pJ3Lt2WKz1kUcYhjPgFkL6rUW2rIhQlWNNo8CBFM6aHsC7E8b6TqPn7i0mqI9XsbJTFul7WsjSfIObOcmIZcfrti7vL9Bit0G1hhEjpvEHPDuXNh/s1456/Gif-ADs-8889_Idlix.gif",
+        "linkUrl": ""
+      }
+    ],
+    "squareEnabled": true,
+    "squareAds": [
+      {
+        "imageUrl": "https://iphone17.b-cdn.net/iklan/PENTASLOT.gif",
+        "linkUrl": ""
+      },
+      {
+        "imageUrl": "https://iphone17.b-cdn.net/iklan/PENTASLOT.gif",
+        "linkUrl": ""
+      },
+      {
+        "imageUrl": "https://iphone17.b-cdn.net/iklan/PENTASLOT.gif",
+        "linkUrl": ""
+      },
+      {
+        "imageUrl": "https://iphone17.b-cdn.net/iklan/PENTASLOT.gif",
+        "linkUrl": ""
+      }
+    ],
+    "sidebarEnabled": true,
+    "sidebarAds": [
+      {
+        "imageUrl": "https://iphone17.b-cdn.net/iklan/PENTASLOT.gif",
+        "linkUrl": ""
+      },
+      {
+        "imageUrl": "https://iphone17.b-cdn.net/iklan/PENTASLOT.gif",
+        "linkUrl": ""
+      }
+    ]
+  }
+}
