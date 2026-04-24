@@ -93,7 +93,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main style={{ flex: 1 }}>{children}</main>
         <Footer />
         <ScrollToTop />
-        <AdBlockDetector />
+        {config.enableAdBlocker !== false && <AdBlockDetector />}
       </body>
     </html>
   );

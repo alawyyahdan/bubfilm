@@ -2,11 +2,14 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Play, Plus, Check, Star, ChevronLeft, Tv } from "lucide-react";
-import VideoPlayer from "@/components/VideoPlayer";
+import { Play, Plus, Check, Star, ChevronLeft, Tv, Clock } from "lucide-react";
 import ContentCard from "@/components/ContentCard";
-import PopupAdModal from "@/components/PopupAdModal";
 import BannerAd from "@/components/BannerAd";
+import ShareButton from "@/components/ShareButton";
+import dynamic from "next/dynamic";
+
+const VideoPlayer = dynamic(() => import("@/components/VideoPlayer"), { ssr: false });
+const PopupAdModal = dynamic(() => import("@/components/PopupAdModal"), { ssr: false });
 import type { AniListMedia } from "@/lib/anilist";
 
 interface AnimeDetailClientProps {
@@ -14,6 +17,30 @@ interface AnimeDetailClientProps {
     characters?: { nodes: { id: number; name: { full: string }; image: { large: string } }[] };
     recommendations?: { nodes: { mediaRecommendation: { id: number; title: { romaji: string }; coverImage: { large: string }; format: string; averageScore: number; seasonYear: number } }[] };
   };
+}
+
+function Countdown({ targetTime }: { targetTime: number }) {
+  const [timeLeft, setTimeLeft] = useState("");
+
+  useEffect(() => {
+    const update = () => {
+      const diff = targetTime - Date.now();
+      if (diff <= 0) {
+        setTimeLeft("Aired");
+        return;
+      }
+      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const m = Math.floor((diff / 1000 / 60) % 60);
+      const s = Math.floor((diff / 1000) % 60);
+      setTimeLeft(`${d}d ${h}h ${m}m ${s}s`);
+    };
+    update();
+    const timer = setInterval(update, 1000);
+    return () => clearInterval(timer);
+  }, [targetTime]);
+
+  return <span className="font-mono tracking-wider">{timeLeft}</span>;
 }
 
 export default function AnimeDetailClient({ anime }: AnimeDetailClientProps) {
@@ -39,7 +66,8 @@ export default function AnimeDetailClient({ anime }: AnimeDetailClientProps) {
   });
 
   const title = anime.title.english || anime.title.romaji;
-  const totalEps = anime.episodes || 1;
+  const totalEps = anime.episodes || (anime.nextAiringEpisode ? anime.nextAiringEpisode.episode : 1);
+  const releasedEps = anime.nextAiringEpisode ? anime.nextAiringEpisode.episode - 1 : totalEps;
   const score = anime.averageScore ? (anime.averageScore / 10).toFixed(1) : "N/A";
   const description = anime.description?.replace(/<[^>]*>/g, "") || "";
   const isMovie = anime.format === "MOVIE";
@@ -134,6 +162,14 @@ export default function AnimeDetailClient({ anime }: AnimeDetailClientProps) {
               ))}
             </div>
 
+            {anime.nextAiringEpisode && (
+              <div className="mb-5 inline-flex items-center gap-2 bg-red-600/20 border border-red-600/50 text-red-100 px-4 py-2.5 rounded-lg text-sm font-semibold shadow-lg">
+                <Clock size={16} className="text-red-500 animate-pulse" />
+                <span>Ep {anime.nextAiringEpisode.episode} Airing In:</span>
+                <Countdown targetTime={anime.nextAiringEpisode.airingAt * 1000} />
+              </div>
+            )}
+
             <p className="text-gray-300 text-sm sm:text-base leading-relaxed mb-6 max-w-2xl line-clamp-3">{description}</p>
 
             <div className="flex flex-wrap gap-3">
@@ -154,6 +190,7 @@ export default function AnimeDetailClient({ anime }: AnimeDetailClientProps) {
                 {inList ? <Check size={16} /> : <Plus size={16} />}
                 {inList ? "In My List" : "My List"}
               </button>
+              <ShareButton />
             </div>
           </div>
         </div>
@@ -176,19 +213,25 @@ export default function AnimeDetailClient({ anime }: AnimeDetailClientProps) {
           <div className="mb-12">
             <h2 className="text-white font-bold text-lg mb-4">Episodes</h2>
             <div className="grid grid-cols-5 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 gap-2">
-              {Array.from({ length: totalEps }, (_, i) => i + 1).map((ep) => (
-                <button
-                  key={ep}
-                  onClick={() => { setCurrentEpisode(ep); setShowPlayer(true); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-                  className={`py-2 rounded-lg text-sm font-semibold transition-all border ${
-                    currentEpisode === ep
-                      ? "bg-red-600 border-red-600 text-white"
-                      : "bg-zinc-800 border-zinc-700 text-gray-300 hover:border-red-600 hover:text-white"
-                  }`}
-                >
-                  {ep}
-                </button>
-              ))}
+              {Array.from({ length: totalEps }, (_, i) => i + 1).map((ep) => {
+                const isReleased = ep <= releasedEps;
+                return (
+                  <button
+                    key={ep}
+                    disabled={!isReleased}
+                    onClick={() => { setCurrentEpisode(ep); setShowPlayer(true); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                    className={`py-2 rounded-lg text-sm font-semibold transition-all border ${
+                      !isReleased
+                        ? "bg-zinc-900 border-zinc-800 text-zinc-600 cursor-not-allowed opacity-50"
+                        : currentEpisode === ep
+                        ? "bg-red-600 border-red-600 text-white"
+                        : "bg-zinc-800 border-zinc-700 text-gray-300 hover:border-red-600 hover:text-white"
+                    }`}
+                  >
+                    {ep}
+                  </button>
+                );
+              })}
             </div>
           </div>
         )}

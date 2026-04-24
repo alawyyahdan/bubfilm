@@ -19,6 +19,7 @@ interface SiteConfig {
   advertiseEmail: string;
   chatangoId: string;
   chatangoHandle: string;
+  enableAdBlocker?: boolean;
 }
 
 export default function TabSite() {
@@ -35,6 +36,7 @@ export default function TabSite() {
     ogTitle: "WebStreaming - Watch Free Online",
     ogDescription: "Stream movies, TV shows & anime for free",
     ogImageUrl: "",
+    enableAdBlocker: true,
     dmcaHtml: `<div class="space-y-8 text-zinc-300">
   <section>
     <h3 class="text-xl font-bold text-white mb-2">Overview</h3>
@@ -246,6 +248,22 @@ export default function TabSite() {
               className="w-full bg-zinc-950 font-mono border border-white/5 rounded-lg px-3 py-2 text-xs text-zinc-300 resize-y" 
             />
             <p className="text-zinc-600 text-[10px] mt-1">Gunakan tag HTML untuk memformat halaman DMCA (/dmca). Bebas diedit sesuai kebutuhan.</p>
+          </div>
+        </div>
+
+        {/* Security & Features */}
+        <div className="bg-zinc-900 border border-white/5 rounded-xl p-5">
+          <h3 className="text-sm font-bold text-white border-b border-white/5 pb-3 mb-4">Security & Features</h3>
+          
+          <div className="flex items-center justify-between bg-zinc-950 border border-white/5 p-4 rounded-lg">
+            <div>
+              <div className="text-xs font-bold text-white mb-1">AdBlock Detector</div>
+              <div className="text-[10px] text-zinc-500">Enable or disable the anti-adblock overlay.</div>
+            </div>
+            <label className="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" checked={config.enableAdBlocker !== false} onChange={e => setConfig({...config, enableAdBlocker: e.target.checked})} className="sr-only peer" />
+              <div className="w-9 h-5 bg-zinc-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-red-600"></div>
+            </label>
           </div>
         </div>
 

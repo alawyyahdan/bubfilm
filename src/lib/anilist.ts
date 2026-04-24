@@ -30,6 +30,11 @@ const MEDIA_FIELDS = `
   genres
   isAdult
   trailer { id site }
+  nextAiringEpisode {
+    airingAt
+    timeUntilAiring
+    episode
+  }
 `;
 
 export const getTrendingAnime = () =>
@@ -109,4 +114,9 @@ export interface AniListMedia {
   genres: string[];
   isAdult: boolean;
   trailer?: { id: string; site: string } | null;
+  nextAiringEpisode?: {
+    airingAt: number;
+    timeUntilAiring: number;
+    episode: number;
+  } | null;
 }

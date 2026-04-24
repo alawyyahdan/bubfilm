@@ -29,7 +29,7 @@ export default function ContentCard({
   const imgSrc = coverImage || (posterPath ? tmdbImg(posterPath, "w342") : null);
 
   return (
-    <Link href={href} className="block flex-shrink-0 w-36 sm:w-40 lg:w-44 group">
+    <Link href={href} prefetch={false} className="block flex-shrink-0 w-36 sm:w-40 lg:w-44 group">
       {/* Card */}
       <div className="content-card relative rounded-xl overflow-hidden bg-zinc-800 aspect-poster cursor-pointer">
         {/* Type Badge */}

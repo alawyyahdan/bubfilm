@@ -41,8 +41,7 @@ const nextConfig: NextConfig = {
         "*.trycloudflare.com",
         "*.loca.lt",
         "*.devtunnels.ms",
-        "*.asse.devtunnels.ms",
-        "j21r7pjs-3000.asse.devtunnels.ms"
+        "*.asse.devtunnels.ms"
       ],
     },
   },

@@ -4,11 +4,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { Play, Plus, Check, Star, Clock, Calendar, ChevronLeft } from "lucide-react";
 import { tmdbImg } from "@/lib/tmdb";
-import VideoPlayer from "@/components/VideoPlayer";
 import EpisodeList from "@/components/EpisodeList";
 import ContentRow from "@/components/ContentRow";
-import PopupAdModal from "@/components/PopupAdModal";
 import BannerAd from "@/components/BannerAd";
+import ShareButton from "@/components/ShareButton";
+import dynamic from "next/dynamic";
+
+const VideoPlayer = dynamic(() => import("@/components/VideoPlayer"), { ssr: false });
+const PopupAdModal = dynamic(() => import("@/components/PopupAdModal"), { ssr: false });
 
 interface Episode {
   id: number;
@@ -177,6 +180,7 @@ export default function TVDetailClient({ show, initialSeason }: TVDetailClientPr
                 {inList ? <Check size={16} /> : <Plus size={16} />}
                 {inList ? "In My List" : "My List"}
               </button>
+              <ShareButton />
             </div>
           </div>
         </div>

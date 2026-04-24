@@ -24,5 +24,13 @@
     "movieUrl": "https://vidsrc-embed.ru/embed/movie/{tmdb}",
     "tvUrl": "https://vidsrc-embed.ru/embed/tv/{tmdb}/{season}-{episode}",
     "animeUrl": ""
+  },
+  {
+    "id": "server-1777035765286",
+    "name": "New Server",
+    "enabled": true,
+    "movieUrl": "",
+    "tvUrl": "",
+    "animeUrl": "https://vidnest.fun/animepahe/{anilist}/{episode}/sub"
   }
 ]

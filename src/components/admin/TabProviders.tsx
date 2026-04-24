@@ -97,7 +97,7 @@ export default function TabProviders() {
             <li>Gunakan <code>{`{tmdb}`}</code> untuk ID TMDB (Film / TV)</li>
             <li>Gunakan <code>{`{season}`}</code> untuk TV Season (default 1)</li>
             <li>Gunakan <code>{`{episode}`}</code> untuk TV / Anime Episode</li>
-            <li>Gunakan <code>{`{mal}`}</code> untuk MyAnimeList ID (khusus Anime)</li>
+            <li>Gunakan <code>{`{anilist}`}</code> untuk AniList ID (khusus Anime)</li>
           </ul>
         </div>
       </div>
@@ -143,7 +143,7 @@ export default function TabProviders() {
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="w-12 text-[10px] text-zinc-500 font-bold uppercase text-right shrink-0">Anime</span>
-                  <input type="text" value={p.animeUrl} onChange={e => update(idx, "animeUrl", e.target.value)} placeholder="https://example.com/anime/{mal}/{episode}" className="flex-1 bg-zinc-950 border border-white/5 rounded px-2 py-1.5 text-xs text-purple-400 font-mono" />
+                  <input type="text" value={p.animeUrl} onChange={e => update(idx, "animeUrl", e.target.value)} placeholder="https://example.com/anime/{anilist}/{episode}" className="flex-1 bg-zinc-950 border border-white/5 rounded px-2 py-1.5 text-xs text-purple-400 font-mono" />
                 </div>
               </div>
             </div>

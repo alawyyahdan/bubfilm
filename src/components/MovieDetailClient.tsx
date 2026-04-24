@@ -4,10 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { Play, Plus, Check, Star, Clock, Calendar, ChevronLeft } from "lucide-react";
 import { tmdbImg, type TMDBMedia } from "@/lib/tmdb";
-import VideoPlayer from "@/components/VideoPlayer";
 import ContentRow from "@/components/ContentRow";
-import PopupAdModal from "@/components/PopupAdModal";
 import BannerAd from "@/components/BannerAd";
+import ShareButton from "@/components/ShareButton";
+import dynamic from "next/dynamic";
+
+const VideoPlayer = dynamic(() => import("@/components/VideoPlayer"), { ssr: false });
+const PopupAdModal = dynamic(() => import("@/components/PopupAdModal"), { ssr: false });
 
 interface MovieDetailClientProps {
   movie: Record<string, unknown>;
@@ -147,6 +150,7 @@ export default function MovieDetailClient({ movie }: MovieDetailClientProps) {
                 {inList ? <Check size={16} /> : <Plus size={16} />}
                 {inList ? "In My List" : "My List"}
               </button>
+              <ShareButton />
             </div>
           </div>
         </div>

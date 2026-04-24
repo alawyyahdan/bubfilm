@@ -1,14 +1,14 @@
 {
-  "totalPageViews": 497,
+  "totalPageViews": 564,
   "uniqueSessions": 0,
   "pages": {
-    "/": 136,
+    "/": 150,
     "/tv/95557": 4,
     "/tv/76479": 16,
     "/tv": 16,
     "/tv/124364": 6,
-    "/movies": 17,
-    "/anime": 18,
+    "/movies": 21,
+    "/anime": 31,
     "/mylist": 4,
     "/admin": 1,
     "/movie/1523145": 3,
@@ -25,7 +25,7 @@
     "/dmca": 5,
     "/movie/269973": 1,
     "/tv/224263": 2,
-    "/sports": 83,
+    "/sports": 85,
     "/sport/1528274": 3,
     "/sport/23_O0aclgPG": 13,
     "/sport/753430": 1,
@@ -49,8 +49,8 @@
     "/sport/4704320": 3,
     "/etu": 1,
     "/sport/4703209": 8,
-    "/anime/180745": 2,
-    "/anime/asdasdasd.com": 5,
+    "/anime/180745": 5,
+    "/anime/asdasdasd.com": 6,
     "/movie/1198994": 1,
     "/movie/119899dsf": 1,
     "/sport/4705096": 3,
@@ -63,11 +63,22 @@
     "/movie/980431": 1,
     "/movie/980431sd": 1,
     "/sport/4534061": 6,
-    "/sport/4705044": 3
+    "/sport/4705044": 3,
+    "/movie/1318447": 3,
+    "/anime/189046": 3,
+    "/anime/199221": 6,
+    "/anime/192808": 9,
+    "/movie/9960": 1,
+    "/anime/186497": 1,
+    "/anime/147105": 1,
+    "/anime/129201": 1,
+    "/sport/1527587": 3,
+    "/movie/240": 1,
+    "/tv/37854": 1
   },
   "dailyViews": {
     "2026-04-23": 492,
-    "2026-04-24": 5
+    "2026-04-24": 72
   },
-  "lastUpdated": "2026-04-24T07:41:07.004Z"
+  "lastUpdated": "2026-04-24T18:55:46.277Z"
 }

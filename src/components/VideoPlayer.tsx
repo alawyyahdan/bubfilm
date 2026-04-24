@@ -35,12 +35,13 @@ interface Provider {
   animeUrl: string;
 }
 
-function buildUrl(template: string, vars: { tmdb?: number; season?: number; episode?: number; mal?: number | null }) {
+function buildUrl(template: string, vars: { tmdb?: number; season?: number; episode?: number; mal?: number | null; anilist?: number }) {
   return template
     .replace(/\{tmdb\}/g, String(vars.tmdb ?? ""))
     .replace(/\{season\}/g, String(vars.season ?? 1))
     .replace(/\{episode\}/g, String(vars.episode ?? 1))
-    .replace(/\{mal\}/g, String(vars.mal ?? ""));
+    .replace(/\{mal\}/g, String(vars.mal ?? ""))
+    .replace(/\{anilist\}/g, String(vars.anilist ?? ""));
 }
 
 export default function VideoPlayer({ type, id, season = 1, episode = 1, malId, onClose }: VideoPlayerProps) {
@@ -100,7 +101,7 @@ export default function VideoPlayer({ type, id, season = 1, episode = 1, malId, 
   const getIframeSrc = () => {
     const provider = providers.find(p => p.id === selectedProvider);
     if (!provider) return "";
-    const vars = { tmdb: id, season, episode, mal: malId };
+    const vars = { tmdb: id, season, episode, mal: malId, anilist: type === "anime" ? id : undefined };
     if (type === "movie") return buildUrl(provider.movieUrl, vars);
     if (type === "tv") return buildUrl(provider.tvUrl, vars);
     if (type === "anime") return buildUrl(provider.animeUrl, vars);
@@ -238,7 +239,6 @@ export default function VideoPlayer({ type, id, season = 1, episode = 1, malId, 
           className="w-full h-full border-none"
           allowFullScreen
           allow="encrypted-media; autoplay; fullscreen; picture-in-picture"
-          referrerPolicy="no-referrer"
           title="Video Player"
         />
       </div>
