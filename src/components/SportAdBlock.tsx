@@ -47,13 +47,11 @@ function SquareSlot({ ad }: { ad: AdItem }) {
 }
 
 /** 
- * Renders the full ad zone BELOW the video player:
- * [728x90 banner top]
- * [300x300] [300x300]
- * [300x300] [300x300]
- * [728x90 banner bottom]
+ * Renders the ad zone BELOW the video player split into two parts:
+ * top: [728x90 banner top (x2)] + [300x300 square grid (x4)]
+ * bottom: [728x90 banner bottom (x2)]
  */
-export function SportPlayerAds() {
+export function SportPlayerAds({ position = "all" }: { position?: "top" | "bottom" | "all" }) {
   const [cfg, setCfg] = useState<SportAdsConfig | null>(null);
 
   useEffect(() => {
@@ -71,22 +69,38 @@ export function SportPlayerAds() {
 
   const topBanners  = hasBanner ? cfg.bannerAds.slice(0, 2) : [];
   const botBanners  = hasBanner ? cfg.bannerAds.slice(2, 4) : [];
-  const squares     = hasSquare ? cfg.squareAds.slice(0, 4)  : [];
+  const topSquares  = hasSquare ? cfg.squareAds.slice(0, 2) : [];
+  const botSquares  = hasSquare ? cfg.squareAds.slice(2, 4) : [];
 
   return (
     <div className="w-full space-y-3 mt-4">
-      {/* Top banners (max 2) */}
-      {topBanners.map((ad, i) => <BannerSlot key={`tb-${i}`} ad={ad} />)}
+      {(position === "top" || position === "all") && (
+        <>
+          {/* Top banners (max 2) */}
+          {topBanners.map((ad, i) => <BannerSlot key={`tb-${i}`} ad={ad} />)}
 
-      {/* 2×2 square grid */}
-      {squares.length > 0 && (
-        <div className="grid grid-cols-2 gap-3 max-w-[628px] mx-auto">
-          {squares.map((ad, i) => <SquareSlot key={`sq-${i}`} ad={ad} />)}
-        </div>
+          {/* Top square grid (max 2) */}
+          {topSquares.length > 0 && (
+            <div className="grid grid-cols-2 gap-3 max-w-[628px] mx-auto">
+              {topSquares.map((ad, i) => <SquareSlot key={`tsq-${i}`} ad={ad} />)}
+            </div>
+          )}
+        </>
       )}
 
-      {/* Bottom banners (max 2) */}
-      {botBanners.map((ad, i) => <BannerSlot key={`bb-${i}`} ad={ad} />)}
+      {(position === "bottom" || position === "all") && (
+        <>
+          {/* Bottom square grid (max 2) */}
+          {botSquares.length > 0 && (
+            <div className="grid grid-cols-2 gap-3 max-w-[628px] mx-auto">
+              {botSquares.map((ad, i) => <SquareSlot key={`bsq-${i}`} ad={ad} />)}
+            </div>
+          )}
+
+          {/* Bottom banners (max 2) */}
+          {botBanners.map((ad, i) => <BannerSlot key={`bb-${i}`} ad={ad} />)}
+        </>
+      )}
     </div>
   );
 }

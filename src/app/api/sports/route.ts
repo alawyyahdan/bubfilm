@@ -34,7 +34,7 @@ export async function GET(req: Request) {
 
   try {
     const res = await fetch(url, {
-      next: { revalidate: 60 },
+      cache: "no-store",
       headers: { "User-Agent": "Mozilla/5.0" }
     });
     if (!res.ok) return NextResponse.json([], { status: 200 });

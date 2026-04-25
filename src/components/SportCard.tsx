@@ -1,15 +1,14 @@
 import Link from "next/link";
+import Image from "next/image";
 import { SportMatch } from "@/lib/sport";
 import { Play } from "lucide-react";
 
-const proxyImg = (url: string) =>
-  url ? `/api/img-proxy?src=${encodeURIComponent(url)}` : "";
 
 export default function SportCard({ match }: { match: SportMatch }) {
   const isLive = match.status === "in" || match.status === "live";
 
-  // Use poster as the card image (already full-size banner from API)
-  const imgSrc = match.poster ? proxyImg(match.poster) : null;
+  // Use poster as the card image directly (Next.js will optimize it via remotePatterns)
+  const imgSrc = match.poster || null;
 
   return (
     <Link href={`/sport/${match.matchId}`} className="block flex-shrink-0 w-44 sm:w-52 lg:w-60 group">
@@ -32,11 +31,11 @@ export default function SportCard({ match }: { match: SportMatch }) {
 
         {/* Poster Image */}
         {imgSrc ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <Image
             src={imgSrc}
             alt={match.title}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            fill sizes="(max-width: 640px) 176px, (max-width: 1024px) 208px, 240px"
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-zinc-700 p-3">

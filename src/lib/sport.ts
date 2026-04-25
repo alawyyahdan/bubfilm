@@ -56,7 +56,7 @@ function normalizeMatch(match: SportMatch): SportMatch {
 export async function getLiveMatches(): Promise<SportMatch[]> {
   try {
     const res = await fetch(`${BASE_URL}/api/v1/matches/all/live`, {
-      next: { revalidate: 60 }
+      cache: "no-store"
     });
     if (!res.ok) return [];
     const data = await res.json();
@@ -70,7 +70,7 @@ export async function getLiveMatches(): Promise<SportMatch[]> {
 export async function getAllMatches(): Promise<SportMatch[]> {
   try {
     const res = await fetch(`${BASE_URL}/api/v1/matches/all`, {
-      next: { revalidate: 120 }
+      cache: "no-store"
     });
     if (!res.ok) return [];
     const data = await res.json();
@@ -123,7 +123,7 @@ export async function getSports(): Promise<SportCategory[]> {
 export async function getMatchesBySport(sport: string): Promise<SportMatch[]> {
   try {
     const res = await fetch(`${BASE_URL}/api/v1/matches/${sport}`, {
-      next: { revalidate: 120 }
+      cache: "no-store"
     });
     if (!res.ok) return [];
     const data = await res.json();

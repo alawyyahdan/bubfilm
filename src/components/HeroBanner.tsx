@@ -22,7 +22,7 @@ function getTitle(item: HeroItem) {
 function getBackdrop(item: HeroItem) {
   if ("_type" in item) { const a = item as AniListMedia; return a.bannerImage || a.coverImage.extraLarge; }
   const m = item as TMDBMedia;
-  return m.backdrop_path ? tmdbImg(m.backdrop_path, "original") : tmdbImg(m.poster_path, "original");
+  return m.backdrop_path ? tmdbImg(m.backdrop_path, "w1280") : tmdbImg(m.poster_path, "w1280");
 }
 function getOverview(item: HeroItem) {
   if ("_type" in item) return (item as AniListMedia).description?.replace(/<[^>]*>/g, "") || "";

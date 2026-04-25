@@ -1,14 +1,14 @@
 {
-  "totalPageViews": 615,
+  "totalPageViews": 659,
   "uniqueSessions": 0,
   "pages": {
-    "/": 171,
-    "/tv/95557": 5,
+    "/": 176,
+    "/tv/95557": 6,
     "/tv/76479": 16,
-    "/tv": 20,
+    "/tv": 23,
     "/tv/124364": 6,
-    "/movies": 22,
-    "/anime": 40,
+    "/movies": 23,
+    "/anime": 41,
     "/mylist": 4,
     "/admin": 1,
     "/movie/1523145": 3,
@@ -25,7 +25,7 @@
     "/dmca": 5,
     "/movie/269973": 1,
     "/tv/224263": 4,
-    "/sports": 89,
+    "/sports": 99,
     "/sport/1528274": 3,
     "/sport/23_O0aclgPG": 13,
     "/sport/753430": 1,
@@ -79,12 +79,17 @@
     "/sports/basketball": 1,
     "/sports/hockey": 1,
     "/anime/171110": 1,
-    "/anime/21": 1
+    "/anime/21": 1,
+    "/sport/748455": 8,
+    "/tv/94722": 1,
+    "/sport/4667731": 4,
+    "/sport/4452594": 2,
+    "/sport/745136": 8
   },
   "dailyViews": {
     "2026-04-23": 492,
     "2026-04-24": 105,
-    "2026-04-25": 18
+    "2026-04-25": 62
   },
-  "lastUpdated": "2026-04-25T12:52:48.442Z"
+  "lastUpdated": "2026-04-25T13:22:41.691Z"
 }

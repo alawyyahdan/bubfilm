@@ -10,6 +10,8 @@ import SportChat from "./SportChat";
 const proxyImg = (url: string) =>
   url ? `/api/img-proxy?src=${encodeURIComponent(url)}` : "";
 
+import MatchStatistics from "./MatchStatistics";
+
 export default function SportDetailClient({ match }: { match: SportMatch }) {
   const [selectedStream, setSelectedStream] = useState(match.streams?.[0] || null);
 
@@ -127,12 +129,14 @@ export default function SportDetailClient({ match }: { match: SportMatch }) {
               )}
             </div>
 
-            {/* Sport-specific ad zone below player:
-                [728x90 banner top]
-                [300x300][300x300]
-                [300x300][300x300]
-                [728x90 banner bottom] */}
-            <SportPlayerAds />
+            {/* Sport-specific TOP ad zone (banners + square grid) */}
+            <SportPlayerAds position="top" />
+            
+            {/* Real-time Match Statistics */}
+            <MatchStatistics matchId={match.matchId} />
+
+            {/* Sport-specific BOTTOM ad zone (bottom banners) */}
+            <SportPlayerAds position="bottom" />
           </div>
 
           {/* RIGHT SIDEBAR: Match Details */}
