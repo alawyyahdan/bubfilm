@@ -1,6 +1,7 @@
 import { getLiveMatches, getSports } from "@/lib/sport";
 import LazySportSection from "@/components/LazySportSection";
 import BannerAd from "@/components/BannerAd";
+import SportFilter from "@/components/SportFilter";
 import { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
@@ -39,7 +40,7 @@ export default async function SportsPage() {
     <div className="min-h-screen bg-zinc-950 pt-24 pb-16">
       <div className="max-w-7xl mx-auto">
         {/* Page Header */}
-        <div className="px-4 sm:px-6 lg:px-10 mb-8 border-b border-white/5 pb-6">
+        <div className="px-4 sm:px-6 lg:px-10 mb-6 pb-2">
           <h1 className="text-3xl sm:text-4xl font-black text-white">
             Sports
           </h1>
@@ -47,6 +48,9 @@ export default async function SportsPage() {
             Live & upcoming matches across all sports.
           </p>
         </div>
+
+        {/* Category Filter */}
+        <SportFilter />
 
         <BannerAd location="home" rowIndex={5} />
 

@@ -2,7 +2,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Play, Info, VolumeX, Volume2, ChevronLeft, ChevronRight, Star } from "lucide-react";
+import { Play, Info, ChevronLeft, ChevronRight, Star } from "lucide-react";
 import { tmdbImg } from "@/lib/tmdb";
 import type { TMDBMedia } from "@/lib/tmdb";
 import type { AniListMedia } from "@/lib/anilist";
@@ -41,24 +41,15 @@ function getDetailPath(item: HeroItem) {
   const m = item as TMDBMedia;
   return `/${m.media_type === "tv" ? "tv" : "movie"}/${m.id}`;
 }
-function getVideoKey(item: HeroItem): string | null {
-  return (item as { videoKey?: string | null }).videoKey || null;
-}
 
 export default function HeroBanner({ items, siteName = "Film" }: HeroBannerProps) {
   const [current, setCurrent] = useState(0);
   const [prev, setPrev] = useState<number | null>(null);
   const [transitioning, setTransitioning] = useState(false);
-  const [muted, setMuted] = useState(true);
   const [progress, setProgress] = useState(0);
-  const [videoReady, setVideoReady] = useState(false);
   const router = useRouter();
   const progressRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const videoCheckRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const failCountRef = useRef(0);
-  const nextRef = useRef<(() => void) | null>(null);
   const DURATION = 8000;
-  const siteOrigin = typeof window !== "undefined" ? window.location.origin : (process.env.NEXT_PUBLIC_SITE_URL || "");
 
   const goTo = useCallback((idx: number) => {
     if (transitioning || idx === current) return;
@@ -66,54 +57,10 @@ export default function HeroBanner({ items, siteName = "Film" }: HeroBannerProps
     setPrev(current);
     setCurrent(idx);
     setProgress(0);
-    setVideoReady(false);
     setTimeout(() => { setPrev(null); setTransitioning(false); }, 700);
   }, [current, transitioning]);
 
   const next = useCallback(() => goTo((current + 1) % items.length), [current, items.length, goTo]);
-
-  // Keep nextRef always fresh to avoid stale closures in setTimeout
-  useEffect(() => { nextRef.current = next; }, [next]);
-
-  // YouTube postMessage listener — detects if trailer is actually playing
-  useEffect(() => {
-    const videoKey = getVideoKey(items[current]);
-    if (!videoKey) {
-      failCountRef.current = 0;
-      setVideoReady(false);
-      return;
-    }
-
-    setVideoReady(false);
-
-    const handleMessage = (event: MessageEvent) => {
-      try {
-        const data = JSON.parse(typeof event.data === "string" ? event.data : "{}");
-        // YouTube IFrame API sends playerState: 1 when video is actually playing
-        if (data?.event === "infoDelivery" && data?.info?.playerState === 1) {
-          if (videoCheckRef.current) clearTimeout(videoCheckRef.current);
-          failCountRef.current = 0;
-          setVideoReady(true);
-        }
-      } catch {}
-    };
-
-    window.addEventListener("message", handleMessage);
-
-    // 5 seconds to detect playback, if not playing → assume blocked/sign-in → skip
-    videoCheckRef.current = setTimeout(() => {
-      failCountRef.current++;
-      if (failCountRef.current < items.length) {
-        nextRef.current?.();
-      }
-      // else all slides failed → just show backdrop, no autoplay
-    }, 5000);
-
-    return () => {
-      window.removeEventListener("message", handleMessage);
-      if (videoCheckRef.current) clearTimeout(videoCheckRef.current);
-    };
-  }, [current, items]);
 
   // Progress bar ticker
   useEffect(() => {
@@ -133,10 +80,9 @@ export default function HeroBanner({ items, siteName = "Film" }: HeroBannerProps
 
   const item = items[current];
   const prevItem = prev !== null ? items[prev] : null;
-  const videoKey = getVideoKey(item);
 
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-zinc-950 z-20">
+    <div className="relative w-full h-screen overflow-hidden bg-zinc-950 z-20 group">
 
       {/* ── PROGRESS BAR ── */}
       <div className="fixed top-0 left-0 right-0 z-[100] h-[3px] bg-white/10 pointer-events-none">
@@ -155,9 +101,8 @@ export default function HeroBanner({ items, siteName = "Film" }: HeroBannerProps
         </div>
       )}
 
-      {/* ── CURRENT SLIDE BACKDROP / VIDEO ── */}
+      {/* ── CURRENT SLIDE BACKDROP ── */}
       <div className={`absolute inset-0 z-10 ${transitioning ? "animate-fade-in" : "opacity-100"}`}>
-        {/* Backdrop Image — always shown as base layer */}
         <Image
           src={getBackdrop(item)}
           alt={getTitle(item)}
@@ -165,18 +110,6 @@ export default function HeroBanner({ items, siteName = "Film" }: HeroBannerProps
           className="object-cover object-center"
           sizes="100vw"
         />
-        {/* YouTube Trailer — hidden until postMessage confirms it's playing */}
-        {videoKey && (
-          <div className={`absolute inset-0 overflow-hidden transition-opacity duration-1000 ${videoReady ? "opacity-100" : "opacity-0"}`}>
-            <iframe
-              key={videoKey}
-              className="absolute w-[100vw] h-[56.25vw] min-h-[100vh] min-w-[177.77vh] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-              src={`https://www.youtube-nocookie.com/embed/${videoKey}?autoplay=1&mute=${muted ? 1 : 0}&loop=1&controls=0&showinfo=0&rel=0&modestbranding=1&playlist=${videoKey}&iv_load_policy=3&disablekb=1&fs=0&playsinline=1&enablejsapi=1&origin=${siteOrigin}`}
-              allow="autoplay; encrypted-media"
-              title="trailer"
-            />
-          </div>
-        )}
         <div className="absolute inset-0 hero-gradient" />
         <div className="absolute bottom-0 left-0 right-0 h-48 hero-bottom-gradient" />
       </div>
@@ -215,60 +148,48 @@ export default function HeroBanner({ items, siteName = "Film" }: HeroBannerProps
             <div className="flex items-center gap-3 flex-wrap">
               <button
                 onClick={() => router.push(getDetailPath(item))}
-                className="hero-btn-play flex items-center gap-2 px-7 py-3 rounded-lg font-bold text-white text-sm"
+                className="hero-btn-play flex items-center gap-2 px-7 py-3 rounded-lg font-bold text-white text-sm transition-all hover:scale-105 active:scale-95"
               >
                 <Play size={18} fill="white" /> Play
               </button>
               <button
                 onClick={() => router.push(getDetailPath(item))}
-                className="hero-btn-info flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-white text-sm"
+                className="hero-btn-info flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-white text-sm transition-all hover:scale-105 active:scale-95 border border-white/20 hover:bg-white/10"
               >
                 <Info size={18} /> More Info
               </button>
             </div>
           </div>
         </div>
+
+        {/* ── ARROWS ── */}
+        <button
+          onClick={() => goTo((current - 1 + items.length) % items.length)}
+          className="absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/20 hover:bg-black/40 text-white transition-all opacity-0 group-hover:opacity-100 z-30"
+          aria-label="Previous slide"
+        >
+          <ChevronLeft size={32} />
+        </button>
+        <button
+          onClick={next}
+          className="absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/20 hover:bg-black/40 text-white transition-all opacity-0 group-hover:opacity-100 z-30"
+          aria-label="Next slide"
+        >
+          <ChevronRight size={32} />
+        </button>
       </div>
 
-      {/* ── LEFT NAVIGATION (Hover to reveal) ── */}
-      <button 
-        onClick={() => goTo((current - 1 + items.length) % items.length)}
-        className="absolute left-0 top-0 bottom-0 w-16 sm:w-32 z-40 flex items-center justify-start px-2 sm:px-6 opacity-0 hover:opacity-100 hover:bg-gradient-to-r from-black/60 to-transparent transition-all duration-300 group cursor-pointer"
-        aria-label="Previous slide"
-      >
-        <ChevronLeft size={48} className="text-white drop-shadow-xl transform -translate-x-4 group-hover:translate-x-0 transition-transform duration-300" />
-      </button>
-
-      {/* ── RIGHT NAVIGATION (Hover to reveal) ── */}
-      <button 
-        onClick={next}
-        className="absolute right-0 top-0 bottom-0 w-16 sm:w-32 z-40 flex items-center justify-end px-2 sm:px-6 opacity-0 hover:opacity-100 hover:bg-gradient-to-l from-black/60 to-transparent transition-all duration-300 group cursor-pointer"
-        aria-label="Next slide"
-      >
-        <ChevronRight size={48} className="text-white drop-shadow-xl transform translate-x-4 group-hover:translate-x-0 transition-transform duration-300" />
-      </button>
-
       {/* ── DOT PAGINATION ── */}
-      <div className="absolute bottom-[100px] sm:bottom-32 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2">
-        {items.slice(0, 8).map((_, i) => (
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-30 flex gap-2">
+        {items.slice(0, 10).map((_, i) => (
           <button
             key={i}
             onClick={() => goTo(i)}
-            className={`hero-dot transition-all duration-400 ${i === current ? "active" : ""}`}
+            className={`h-1 transition-all duration-300 rounded-full ${i === current ? "w-8 bg-red-600" : "w-2 bg-white/30 hover:bg-white/50"}`}
             aria-label={`Go to slide ${i + 1}`}
           />
         ))}
       </div>
-
-      {/* ── MUTE BUTTON ── */}
-      {videoKey && (
-        <button
-          onClick={() => setMuted(!muted)}
-          className="absolute bottom-[100px] sm:bottom-32 right-8 z-50 p-2.5 rounded-full border border-white/30 bg-black/50 text-white hover:bg-white/20 transition-all duration-200"
-        >
-          {muted ? <VolumeX size={16} /> : <Volume2 size={16} />}
-        </button>
-      )}
     </div>
   );
 }
